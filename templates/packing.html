@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -694,53 +694,96 @@
     </div>
 
     <script>
-        function toggleMenu() {
-            document.querySelector('.hamburger').classList.toggle('active');
-            document.querySelector('.nav-links').classList.toggle('active');
-        }
+    function toggleMenu() {
+        document.querySelector('.hamburger').classList.toggle('active');
+        document.querySelector('.nav-links').classList.toggle('active');
+    }
 
-        // ローカルストレージからチェック状態を復元
-        function loadCheckState() {
-            const items = document.querySelectorAll('.checkbox');
-            items.forEach((checkbox, index) => {
-                const isChecked = localStorage.getItem(`item-${index}`) === 'true';
-                if (isChecked) {
-                    checkbox.classList.add('checked');
-                    checkbox.nextElementSibling.classList.add('checked');
-                }
-            });
+    let saveTimer = null;
+
+    function applyChecked(checked) {
+        const items = document.querySelectorAll('.checkbox');
+        items.forEach((checkbox, index) => {
+            if (checked.includes(index)) {
+                checkbox.classList.add('checked');
+                checkbox.nextElementSibling.classList.add('checked');
+            } else {
+                checkbox.classList.remove('checked');
+                checkbox.nextElementSibling.classList.remove('checked');
+            }
+        });
+        updateProgress();
+    }
+
+    function collectCheckedIndices() {
+        const items = document.querySelectorAll('.checkbox');
+        const checked = [];
+        items.forEach((checkbox, index) => {
+            if (checkbox.classList.contains('checked')) {
+                checked.push(index);
+            }
+        });
+        return checked;
+    }
+
+    async function loadCheckState() {
+        try {
+            const res = await fetch('/api/packing', { credentials: 'same-origin' });
+            if (!res.ok) {
+                throw new Error('load failed');
+            }
+            const data = await res.json();
+            if (Array.isArray(data.checked)) {
+                applyChecked(data.checked);
+            } else {
+                updateProgress();
+            }
+        } catch (error) {
             updateProgress();
         }
+    }
 
-        // チェック状態を切り替え
-        function toggleCheck(checkbox) {
-            checkbox.classList.toggle('checked');
-            checkbox.nextElementSibling.classList.toggle('checked');
-
-            // ローカルストレージに保存
-            const items = document.querySelectorAll('.checkbox');
-            items.forEach((cb, index) => {
-                if (cb === checkbox) {
-                    localStorage.setItem(`item-${index}`, cb.classList.contains('checked'));
-                }
+    async function saveCheckState() {
+        const checked = collectCheckedIndices();
+        try {
+            await fetch('/api/packing', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'same-origin',
+                body: JSON.stringify({ checked })
             });
-
-            updateProgress();
+        } catch (error) {
+            // Ignore save errors to avoid blocking UI.
         }
+    }
 
-        // 進捗を更新
-        function updateProgress() {
-            const total = document.querySelectorAll('.checkbox').length;
-            const checked = document.querySelectorAll('.checkbox.checked').length;
-            const percentage = total > 0 ? (checked / total) * 100 : 0;
-
-            document.getElementById('checked-count').textContent = checked;
-            document.getElementById('total-count').textContent = total;
-            document.getElementById('progress-fill').style.width = percentage + '%';
+    function scheduleSave() {
+        if (saveTimer) {
+            clearTimeout(saveTimer);
         }
+        saveTimer = setTimeout(saveCheckState, 400);
+    }
 
-        // ページ読み込み時に実行
-        document.addEventListener('DOMContentLoaded', loadCheckState);
-    </script>
+    function toggleCheck(checkbox) {
+        checkbox.classList.toggle('checked');
+        checkbox.nextElementSibling.classList.toggle('checked');
+        updateProgress();
+        scheduleSave();
+    }
+
+    // Update progress display.
+    function updateProgress() {
+        const total = document.querySelectorAll('.checkbox').length;
+        const checked = document.querySelectorAll('.checkbox.checked').length;
+        const percentage = total > 0 ? (checked / total) * 100 : 0;
+
+        document.getElementById('checked-count').textContent = checked;
+        document.getElementById('total-count').textContent = total;
+        document.getElementById('progress-fill').style.width = percentage + '%';
+    }
+
+    document.addEventListener('DOMContentLoaded', loadCheckState);
+</script>
 </body>
 </html>
+
