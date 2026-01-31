@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>持ち物リスト | イタリア旅行 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            padding: 100px 20px 40px;
+            color: #fff;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4aa, #7b68ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .nav-links a.active {
+            background: linear-gradient(135deg, #00d4aa, #7b68ee);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #fff;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4aa, #7b68ee, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            font-size: 1.1rem;
+            color: #a0a0a0;
+        }
+
+        .packing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .category-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .category-header {
+            padding: 20px 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .category-header.essential { background: linear-gradient(135deg, #e63946, #d62828); }
+        .category-header.clothes { background: linear-gradient(135deg, #00b4d8, #0077b6); }
+        .category-header.electronics { background: linear-gradient(135deg, #f4a261, #e76f51); }
+        .category-header.toiletries { background: linear-gradient(135deg, #9d4edd, #7b2cbf); }
+        .category-header.misc { background: linear-gradient(135deg, #2a9d8f, #264653); }
+        .category-header.documents { background: linear-gradient(135deg, #e9c46a, #f4a261); color: #1a1a2e; }
+
+        .category-icon {
+            font-size: 1.8rem;
+        }
+
+        .item-list {
+            padding: 20px 25px;
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .item:last-child {
+            border-bottom: none;
+        }
+
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+
+        .checkbox:hover {
+            border-color: #00d4aa;
+        }
+
+        .checkbox.checked {
+            background: #00d4aa;
+            border-color: #00d4aa;
+        }
+
+        .checkbox.checked::after {
+            content: "✓";
+            color: #1a1a2e;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .item-text {
+            flex: 1;
+        }
+
+        .item-text.checked {
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+
+        .item-note {
+            font-size: 0.8rem;
+            color: #a0a0a0;
+            margin-top: 3px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+
+        .tag.important {
+            background: #e63946;
+        }
+
+        .tag.optional {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .progress-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .progress-bar {
+            height: 12px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #00d4aa, #7b68ee);
+            border-radius: 10px;
+            transition: width 0.5s;
+        }
+
+        .progress-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00d4aa;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(26, 26, 46, 0.98);
+                flex-direction: column;
+                padding: 20px;
+                gap: 10px;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                text-align: center;
+                padding: 15px 20px;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .packing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-logo">ITALY 2026</div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="nav-links">
+            <a href="/">スケジュール</a>
+            <a href="/packing" class="active">持ち物リスト</a>
+            <a href="/reservations">予約リスト</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="header">
+            <h1>持ち物リスト</h1>
+            <p class="subtitle">チェックしながら準備しよう</p>
+        </header>
+
+        <div class="progress-section">
+            <span class="progress-text"><span id="checked-count">0</span> / <span id="total-count">0</span></span>
+            <span style="color: #a0a0a0; margin-left: 10px;">アイテム準備完了</span>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div class="packing-grid">
+            <!-- 貴重品・書類 -->
+            <div class="category-card">
+                <div class="category-header documents">
+                    <span class="category-icon">📄</span>
+                    <span>貴重品・書類</span>
+                </div>
+                <div class="item-list">
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            パスポート <span class="tag important">必須</span>
+                            <div class="item-note">有効期限を確認（残存6ヶ月以上）</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            航空券（eチケット）<span class="tag important">必須</span>
+                            <div class="item-note">印刷 or スマホに保存</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            ホテル予約確認書 <span class="tag important">必須</span>
+                            <div class="item-note">全都市分を印刷 or 保存</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            海外旅行保険証
+                            <div class="item-note">クレカ付帯 or 別途加入</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            クレジットカード <span class="tag important">必須</span>
+                            <div class="item-note">VISA/Master 2枚以上推奨</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            現金（ユーロ）
+                            <div class="item-note">€200-300程度。小額紙幣で</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            鉄道チケット
+                            <div class="item-note">Trenitalia/Italo 予約確認</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            サッカーチケット <span class="tag important">必須</span>
+                            <div class="item-note">ラツィオ戦 4/26</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            美術館予約確認
+                            <div class="item-note">最後の晩餐、ウフィツィ、バチカン等</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 電子機器 -->
+            <div class="category-card">
+                <div class="category-header electronics">
+                    <span class="category-icon">📱</span>
+                    <span>電子機器</span>
+                </div>
+                <div class="item-list">
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            スマートフォン <span class="tag important">必須</span>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            充電器・ケーブル <span class="tag important">必須</span>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            変換プラグ（Cタイプ）<span class="tag important">必須</span>
+                            <div class="item-note">イタリアはCタイプ。2個あると便利</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            モバイルバッテリー
+                            <div class="item-note">10000mAh以上推奨</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            カメラ <span class="tag optional">任意</span>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            イヤホン
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            eSIM / ポケットWiFi
+                            <div class="item-note">現地通信手段を確保</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 衣類 -->
+            <div class="category-card">
+                <div class="category-header clothes">
+                    <span class="category-icon">👕</span>
+                    <span>衣類（4月：15-22°C）</span>
+                </div>
+                <div class="item-list">
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            Tシャツ・カットソー
+                            <div class="item-note">5-6枚</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            長袖シャツ・薄手ニット
+                            <div class="item-note">2-3枚。朝晩は肌寒い</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            ライトジャケット / パーカー <span class="tag important">必須</span>
+                            <div class="item-note">夜や教会内は冷える</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            ズボン / パンツ
+                            <div class="item-note">3-4本</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            下着・靴下
+                            <div class="item-note">日数分 + 予備</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            歩きやすい靴 <span class="tag important">必須</span>
+                            <div class="item-note">石畳が多い。スニーカー推奨</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            サンダル <span class="tag optional">任意</span>
+                            <div class="item-note">機内・ホテル用</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            部屋着・パジャマ
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            教会用の羽織り物
+                            <div class="item-note">肩・膝を隠せるもの</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 洗面用具 -->
+            <div class="category-card">
+                <div class="category-header toiletries">
+                    <span class="category-icon">🧴</span>
+                    <span>洗面用具・医薬品</span>
+                </div>
+                <div class="item-list">
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            歯ブラシ・歯磨き粉
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            シャンプー・ボディソープ
+                            <div class="item-note">100ml以下。ホテルにもあり</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            スキンケア用品
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            日焼け止め
+                            <div class="item-note">4月でも紫外線強め</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            常備薬
+                            <div class="item-note">頭痛薬、胃腸薬、酔い止め等</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            絆創膏
+                            <div class="item-note">靴擦れ対策に必須</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            コンタクト・眼鏡
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- バッグ・その他 -->
+            <div class="category-card">
+                <div class="category-header misc">
+                    <span class="category-icon">🎒</span>
+                    <span>バッグ・その他</span>
+                </div>
+                <div class="item-list">
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            スーツケース
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            デイバッグ / サブバッグ <span class="tag important">必須</span>
+                            <div class="item-note">観光用。チャック付き推奨（スリ対策）</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            エコバッグ
+                            <div class="item-note">買い物袋が有料</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            折りたたみ傘
+                            <div class="item-note">4月は雨も多い</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            サングラス
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            ネックピロー <span class="tag optional">任意</span>
+                            <div class="item-note">長時間フライト用</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            アイマスク・耳栓 <span class="tag optional">任意</span>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            ボールペン
+                            <div class="item-note">入国カード記入用</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            南京錠
+                            <div class="item-note">スーツケース用</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- サッカー観戦用 -->
+            <div class="category-card">
+                <div class="category-header essential">
+                    <span class="category-icon">⚽</span>
+                    <span>サッカー観戦用</span>
+                </div>
+                <div class="item-list">
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            チケット（印刷 or アプリ）<span class="tag important">必須</span>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            パスポート <span class="tag important">必須</span>
+                            <div class="item-note">入場時に本人確認あり</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            防寒着
+                            <div class="item-note">夜は冷える</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="checkbox" onclick="toggleCheck(this)"></div>
+                        <div class="item-text">
+                            クッション <span class="tag optional">任意</span>
+                            <div class="item-note">座席が硬い場合あり</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector('.hamburger').classList.toggle('active');
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+
+        // ローカルストレージからチェック状態を復元
+        function loadCheckState() {
+            const items = document.querySelectorAll('.checkbox');
+            items.forEach((checkbox, index) => {
+                const isChecked = localStorage.getItem(`item-${index}`) === 'true';
+                if (isChecked) {
+                    checkbox.classList.add('checked');
+                    checkbox.nextElementSibling.classList.add('checked');
+                }
+            });
+            updateProgress();
+        }
+
+        // チェック状態を切り替え
+        function toggleCheck(checkbox) {
+            checkbox.classList.toggle('checked');
+            checkbox.nextElementSibling.classList.toggle('checked');
+
+            // ローカルストレージに保存
+            const items = document.querySelectorAll('.checkbox');
+            items.forEach((cb, index) => {
+                if (cb === checkbox) {
+                    localStorage.setItem(`item-${index}`, cb.classList.contains('checked'));
+                }
+            });
+
+            updateProgress();
+        }
+
+        // 進捗を更新
+        function updateProgress() {
+            const total = document.querySelectorAll('.checkbox').length;
+            const checked = document.querySelectorAll('.checkbox.checked').length;
+            const percentage = total > 0 ? (checked / total) * 100 : 0;
+
+            document.getElementById('checked-count').textContent = checked;
+            document.getElementById('total-count').textContent = total;
+            document.getElementById('progress-fill').style.width = percentage + '%';
+        }
+
+        // ページ読み込み時に実行
+        document.addEventListener('DOMContentLoaded', loadCheckState);
+    </script>
+</body>
+</html>

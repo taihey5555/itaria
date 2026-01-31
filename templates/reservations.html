@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>予約リスト | イタリア旅行 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            padding: 100px 20px 40px;
+            color: #fff;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4aa, #7b68ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .nav-links a.active {
+            background: linear-gradient(135deg, #00d4aa, #7b68ee);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #fff;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4aa, #7b68ee, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            font-size: 1.1rem;
+            color: #a0a0a0;
+        }
+
+        .progress-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .progress-bar {
+            height: 12px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #00d4aa, #7b68ee);
+            border-radius: 10px;
+            transition: width 0.5s;
+        }
+
+        .progress-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00d4aa;
+        }
+
+        .reservation-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .reservation-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            display: flex;
+            align-items: stretch;
+        }
+
+        .reservation-check {
+            width: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.05);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .reservation-check:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .checkbox {
+            width: 28px;
+            height: 28px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .checkbox.checked {
+            background: #00d4aa;
+            border-color: #00d4aa;
+        }
+
+        .checkbox.checked::after {
+            content: "✓";
+            color: #1a1a2e;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .reservation-content {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .reservation-info {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .reservation-info.checked .reservation-title,
+        .reservation-info.checked .reservation-detail {
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+
+        .reservation-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .reservation-detail {
+            font-size: 0.9rem;
+            color: #a0a0a0;
+        }
+
+        .reservation-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .reservation-date {
+            font-size: 0.85rem;
+            color: #7b68ee;
+            font-weight: 500;
+        }
+
+        .reservation-link {
+            display: inline-block;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #00d4aa, #00b894);
+            color: #1a1a2e;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .reservation-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0, 212, 170, 0.3);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .tag.urgent {
+            background: #e63946;
+        }
+
+        .tag.transport {
+            background: #00b4d8;
+        }
+
+        .tag.attraction {
+            background: #f4a261;
+            color: #1a1a2e;
+        }
+
+        .tag.event {
+            background: #9d4edd;
+        }
+
+        .category-header {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 30px 0 15px;
+            padding-left: 15px;
+            border-left: 4px solid #00d4aa;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(26, 26, 46, 0.98);
+                flex-direction: column;
+                padding: 20px;
+                gap: 10px;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                text-align: center;
+                padding: 15px 20px;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .reservation-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .reservation-meta {
+                align-items: flex-start;
+                width: 100%;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-logo">ITALY 2026</div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="nav-links">
+            <a href="/">スケジュール</a>
+            <a href="/packing">持ち物リスト</a>
+            <a href="/reservations" class="active">予約リスト</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="header">
+            <h1>予約リスト</h1>
+            <p class="subtitle">早めの予約で安心の旅を</p>
+        </header>
+
+        <div class="progress-section">
+            <span class="progress-text"><span id="checked-count">0</span> / <span id="total-count">0</span></span>
+            <span style="color: #a0a0a0; margin-left: 10px;">予約完了</span>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <h2 class="category-header">観光スポット（早めに！）</h2>
+        <div class="reservation-list">
+            <div class="reservation-card">
+                <div class="reservation-check" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                </div>
+                <div class="reservation-content">
+                    <div class="reservation-info">
+                        <div class="reservation-title">
+                            最後の晩餐 <span class="tag urgent">数ヶ月前から</span>
+                        </div>
+                        <div class="reservation-detail">ミラノ｜サンタ・マリア・デッレ・グラツィエ教会｜見学15分制限</div>
+                    </div>
+                    <div class="reservation-meta">
+                        <span class="reservation-date">4/21（火）9:00</span>
+                        <a href="https://cenacolovinciano.vivaticket.it/en" target="_blank" class="reservation-link">予約サイト →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reservation-card">
+                <div class="reservation-check" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                </div>
+                <div class="reservation-content">
+                    <div class="reservation-info">
+                        <div class="reservation-title">
+                            バチカン美術館 <span class="tag attraction">予約済</span>
+                        </div>
+                        <div class="reservation-detail">ローマ｜システィーナ礼拝堂｜オーディオガイド付き｜€56（2名）｜予約コード: 2L2NFK1X00000000YL1</div>
+                    </div>
+                    <div class="reservation-meta">
+                        <span class="reservation-date">4/27（月）12:00</span>
+                        <a href="https://www.museivaticani.va/content/museivaticani/en/visita-i-musei/biglietteria-on-line.html" target="_blank" class="reservation-link">予約済 ✓</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reservation-card">
+                <div class="reservation-check" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                </div>
+                <div class="reservation-content">
+                    <div class="reservation-info">
+                        <div class="reservation-title">
+                            コロッセオ <span class="tag attraction">要予約</span>
+                        </div>
+                        <div class="reservation-detail">ローマ｜フォロ・ロマーノ・パラティーノの丘も含む</div>
+                    </div>
+                    <div class="reservation-meta">
+                        <span class="reservation-date">4/25（土）8:30</span>
+                        <a href="https://colosseo.it/en/opening-times-and-tickets/" target="_blank" class="reservation-link">予約サイト →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reservation-card">
+                <div class="reservation-check" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                </div>
+                <div class="reservation-content">
+                    <div class="reservation-info">
+                        <div class="reservation-title">
+                            ウフィツィ美術館 <span class="tag attraction">要予約</span>
+                        </div>
+                        <div class="reservation-detail">フィレンツェ｜ボッティチェリ「ヴィーナスの誕生」「春」</div>
+                    </div>
+                    <div class="reservation-meta">
+                        <span class="reservation-date">4/23（木）8:30</span>
+                        <a href="https://www.uffizi.it/en/tickets" target="_blank" class="reservation-link">予約サイト →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reservation-card">
+                <div class="reservation-check" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                </div>
+                <div class="reservation-content">
+                    <div class="reservation-info">
+                        <div class="reservation-title">
+                            サン・マルコ寺院 <span class="tag attraction">要予約</span>
+                        </div>
+                        <div class="reservation-detail">ヴェネチア｜黄金のモザイク画</div>
+                    </div>
+                    <div class="reservation-meta">
+                        <span class="reservation-date">4/19（日）9:00</span>
+                        <a href="https://tickets.basilicasanmarco.it/en/" target="_blank" class="reservation-link">予約サイト →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reservation-card">
+                <div class="reservation-check" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                </div>
+                <div class="reservation-content">
+                    <div class="reservation-info">
+                        <div class="reservation-title">
+                            ドゥカーレ宮殿 <span class="tag attraction">要予約</span>
+                        </div>
+                        <div class="reservation-detail">ヴェネチア｜ため息橋も内部から見学可能</div>
+                    </div>
+                    <div class="reservation-meta">
+                        <span class="reservation-date">4/19（日）11:00</span>
+                        <a href="https://palazzoducale.visitmuve.it/en/plan-your-visit/tickets/" target="_blank" class="reservation-link">予約サイト →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="category-header">交通</h2>
+        <div class="reservation-list">
+            <div class="reservation-card">
+                <div class="reservation-check" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                </div>
+                <div class="reservation-content">
+                    <div class="reservation-info">
+                        <div class="reservation-title">
+                            ヴェネチア → ミラノ <span class="tag transport">電車</span>
+                        </div>
+                        <div class="reservation-detail">高速鉄道｜約2時間30分｜早割がお得</div>
+                    </div>
+                    <div class="reservation-meta">
+                        <span class="reservation-date">4/20（月）午前</span>
+                        <a href="https://www.trenitalia.com/en.html" target="_blank" class="reservation-link">Trenitalia →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reservation-card">
+                <div class="reservation-check" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                </div>
+                <div class="reservation-content">
+                    <div class="reservation-info">
+                        <div class="reservation-title">
+                            ミラノ → フィレンツェ <span class="tag transport">電車</span>
+                        </div>
+                        <div class="reservation-detail">高速鉄道｜約1時間50分｜早割がお得</div>
+                    </div>
+                    <div class="reservation-meta">
+                        <span class="reservation-date">4/22（水）午前</span>
+                        <a href="https://www.italotreno.it/en" target="_blank" class="reservation-link">Italo →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reservation-card">
+                <div class="reservation-check" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                </div>
+                <div class="reservation-content">
+                    <div class="reservation-info">
+                        <div class="reservation-title">
+                            フィレンツェ → ローマ <span class="tag transport">電車</span>
+                        </div>
+                        <div class="reservation-detail">高速鉄道｜約1時間30分｜早割がお得</div>
+                    </div>
+                    <div class="reservation-meta">
+                        <span class="reservation-date">4/24（金）午前</span>
+                        <a href="https://www.trenitalia.com/en.html" target="_blank" class="reservation-link">Trenitalia →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="category-header">イベント</h2>
+        <div class="reservation-list">
+            <div class="reservation-card">
+                <div class="reservation-check" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                </div>
+                <div class="reservation-content">
+                    <div class="reservation-info">
+                        <div class="reservation-title">
+                            ラツィオ vs ウディネーゼ <span class="tag event">サッカー</span>
+                        </div>
+                        <div class="reservation-detail">スタディオ・オリンピコ｜セリエA｜パスポート必須</div>
+                    </div>
+                    <div class="reservation-meta">
+                        <span class="reservation-date">4/26（日）20:45頃</span>
+                        <a href="https://www.sslazio.it/en/tickets" target="_blank" class="reservation-link">予約サイト →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="category-header">宿泊</h2>
+        <div class="reservation-list">
+            <div class="reservation-card">
+                <div class="reservation-check" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                </div>
+                <div class="reservation-content">
+                    <div class="reservation-info">
+                        <div class="reservation-title">
+                            ヴェネチア ホテル
+                        </div>
+                        <div class="reservation-detail">2泊｜リアルト〜サン・マルコ間がおすすめ</div>
+                    </div>
+                    <div class="reservation-meta">
+                        <span class="reservation-date">4/18-20</span>
+                        <a href="https://www.booking.com/" target="_blank" class="reservation-link">Booking.com →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reservation-card">
+                <div class="reservation-check" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                </div>
+                <div class="reservation-content">
+                    <div class="reservation-info">
+                        <div class="reservation-title">
+                            ミラノ ホテル
+                        </div>
+                        <div class="reservation-detail">2泊｜ドゥオーモ周辺 or 中央駅周辺</div>
+                    </div>
+                    <div class="reservation-meta">
+                        <span class="reservation-date">4/20-22</span>
+                        <a href="https://www.booking.com/" target="_blank" class="reservation-link">Booking.com →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reservation-card">
+                <div class="reservation-check" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                </div>
+                <div class="reservation-content">
+                    <div class="reservation-info">
+                        <div class="reservation-title">
+                            フィレンツェ ホテル
+                        </div>
+                        <div class="reservation-detail">2泊｜SMN駅〜ドゥオーモ間</div>
+                    </div>
+                    <div class="reservation-meta">
+                        <span class="reservation-date">4/22-24</span>
+                        <a href="https://www.booking.com/" target="_blank" class="reservation-link">Booking.com →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reservation-card">
+                <div class="reservation-check" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                </div>
+                <div class="reservation-content">
+                    <div class="reservation-info">
+                        <div class="reservation-title">
+                            ローマ ホテル
+                        </div>
+                        <div class="reservation-detail">4泊｜テルミニ駅周辺 or 歴史地区</div>
+                    </div>
+                    <div class="reservation-meta">
+                        <span class="reservation-date">4/24-28</span>
+                        <a href="https://www.booking.com/" target="_blank" class="reservation-link">Booking.com →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector('.hamburger').classList.toggle('active');
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+
+        function loadCheckState() {
+            const checkboxes = document.querySelectorAll('.checkbox');
+            checkboxes.forEach((checkbox, index) => {
+                const isChecked = localStorage.getItem(`reservation-${index}`) === 'true';
+                if (isChecked) {
+                    checkbox.classList.add('checked');
+                    checkbox.closest('.reservation-card').querySelector('.reservation-info').classList.add('checked');
+                }
+            });
+            updateProgress();
+        }
+
+        function toggleCheck(element) {
+            const checkbox = element.querySelector('.checkbox');
+            const info = element.closest('.reservation-card').querySelector('.reservation-info');
+
+            checkbox.classList.toggle('checked');
+            info.classList.toggle('checked');
+
+            const checkboxes = document.querySelectorAll('.checkbox');
+            checkboxes.forEach((cb, index) => {
+                if (cb === checkbox) {
+                    localStorage.setItem(`reservation-${index}`, cb.classList.contains('checked'));
+                }
+            });
+
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const total = document.querySelectorAll('.checkbox').length;
+            const checked = document.querySelectorAll('.checkbox.checked').length;
+            const percentage = total > 0 ? (checked / total) * 100 : 0;
+
+            document.getElementById('checked-count').textContent = checked;
+            document.getElementById('total-count').textContent = total;
+            document.getElementById('progress-fill').style.width = percentage + '%';
+        }
+
+        document.addEventListener('DOMContentLoaded', loadCheckState);
+    </script>
+</body>
+</html>

@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>イタリア旅行 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            padding: 100px 20px 40px;
+            color: #fff;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4aa, #7b68ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .nav-links a.active {
+            background: linear-gradient(135deg, #00d4aa, #7b68ee);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #fff;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4aa, #7b68ee, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: #a0a0a0;
+        }
+
+        .header .dates {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 25px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 30px;
+            font-size: 1.1rem;
+        }
+
+        .route-overview {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .route-city {
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .route-city.japan { background: linear-gradient(135deg, #ff6b6b, #ee5a5a); }
+        .route-city.venezia { background: linear-gradient(135deg, #00b4d8, #0077b6); }
+        .route-city.milano { background: linear-gradient(135deg, #e63946, #d62828); }
+        .route-city.firenze { background: linear-gradient(135deg, #f4a261, #e76f51); }
+        .route-city.roma { background: linear-gradient(135deg, #9d4edd, #7b2cbf); }
+
+        .route-arrow {
+            font-size: 1.5rem;
+            color: #666;
+        }
+
+        .city-section {
+            margin-bottom: 40px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .city-header {
+            padding: 25px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .city-header.japan { background: linear-gradient(135deg, #ff6b6b, #ee5a5a); }
+        .city-header.venezia { background: linear-gradient(135deg, #00b4d8, #0077b6); }
+        .city-header.milano { background: linear-gradient(135deg, #e63946, #d62828); }
+        .city-header.firenze { background: linear-gradient(135deg, #f4a261, #e76f51); }
+        .city-header.roma { background: linear-gradient(135deg, #9d4edd, #7b2cbf); }
+
+        .city-icon {
+            font-size: 2.5rem;
+        }
+
+        .city-info h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .city-info .stay {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-top: 3px;
+        }
+
+        .days-container {
+            padding: 20px;
+        }
+
+        .day-card {
+            background: rgba(255,255,255,0.08);
+            border-radius: 15px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .day-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .day-header {
+            padding: 15px 20px;
+            background: rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .day-number {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .day-number .num {
+            font-size: 1.3rem;
+            line-height: 1;
+        }
+
+        .day-number .day {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+
+        .day-date {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .schedule-list {
+            padding: 15px 20px;
+        }
+
+        .schedule-item {
+            display: flex;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .schedule-item:last-child {
+            border-bottom: none;
+        }
+
+        .time {
+            min-width: 70px;
+            font-weight: 700;
+            color: #00d4aa;
+            font-size: 0.95rem;
+        }
+
+        .activity {
+            flex: 1;
+        }
+
+        .activity .title {
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+
+        .activity .detail {
+            font-size: 0.85rem;
+            color: #a0a0a0;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+
+        .tag.soccer {
+            background: #e63946;
+        }
+
+        .tag.must {
+            background: #f4a261;
+            color: #1a1a2e;
+        }
+
+        .tag.move {
+            background: #00b4d8;
+        }
+
+        .tag.flight {
+            background: #7b68ee;
+        }
+
+        .notes-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 40px;
+        }
+
+        .notes-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #00d4aa;
+        }
+
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .note-card {
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .note-card h4 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .note-card ul {
+            list-style: none;
+            font-size: 0.9rem;
+            color: #c0c0c0;
+        }
+
+        .note-card li {
+            padding: 5px 0;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .note-card li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #00d4aa;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(26, 26, 46, 0.98);
+                flex-direction: column;
+                padding: 20px;
+                gap: 10px;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                text-align: center;
+                padding: 15px 20px;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .route-overview {
+                gap: 10px;
+            }
+
+            .route-city {
+                padding: 8px 16px;
+                font-size: 0.85rem;
+            }
+
+            .city-header {
+                padding: 20px;
+            }
+
+            .city-info h2 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-logo">ITALY 2026</div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="nav-links">
+            <a href="/" class="active">スケジュール</a>
+            <a href="/packing">持ち物リスト</a>
+            <a href="/reservations">予約リスト</a>
+        </div>
+    </nav>
+    <script>
+        function toggleMenu() {
+            document.querySelector('.hamburger').classList.toggle('active');
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+    </script>
+    <div class="container">
+        <header class="header">
+            <h1>ITALY TRIP 2026</h1>
+            <p class="subtitle">ヴェネチア・ミラノ・フィレンツェ・ローマ 12日間の旅</p>
+            <div class="dates">4月17日（金）〜 4月28日（火）</div>
+        </header>
+
+        <div class="route-overview">
+            <span class="route-city japan">成田</span>
+            <span class="route-arrow">✈</span>
+            <span class="route-city venezia">ヴェネチア</span>
+            <span class="route-arrow">→</span>
+            <span class="route-city milano">ミラノ</span>
+            <span class="route-arrow">→</span>
+            <span class="route-city firenze">フィレンツェ</span>
+            <span class="route-arrow">→</span>
+            <span class="route-city roma">ローマ</span>
+            <span class="route-arrow">✈</span>
+            <span class="route-city japan">日本</span>
+        </div>
+
+        <!-- 日本出発 -->
+        <section class="city-section">
+            <div class="city-header japan">
+                <span class="city-icon">✈️</span>
+                <div class="city-info">
+                    <h2>日本出発</h2>
+                    <p class="stay">4/17（金）</p>
+                </div>
+            </div>
+            <div class="days-container">
+                <div class="day-card">
+                    <div class="day-header">
+                        <div class="day-number">
+                            <span class="num">17</span>
+                            <span class="day">FRI</span>
+                        </div>
+                        <span class="day-date">4月17日（金）- Day 1</span>
+                    </div>
+                    <div class="schedule-list">
+                        <div class="schedule-item">
+                            <span class="time">20:00</span>
+                            <div class="activity">
+                                <div class="title">成田空港到着</div>
+                                <div class="detail">チェックイン・出国手続き</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">22:25</span>
+                            <div class="activity">
+                                <div class="title">成田発 <span class="tag flight">フライト</span></div>
+                                <div class="detail">ヴェネチア（VCE）へ</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ヴェネチア -->
+        <section class="city-section">
+            <div class="city-header venezia">
+                <span class="city-icon">🚣</span>
+                <div class="city-info">
+                    <h2>ヴェネチア</h2>
+                    <p class="stay">2泊 ｜ 4/18（土）〜 4/20（月）</p>
+                </div>
+            </div>
+            <div class="days-container">
+                <div class="day-card">
+                    <div class="day-header">
+                        <div class="day-number">
+                            <span class="num">18</span>
+                            <span class="day">SAT</span>
+                        </div>
+                        <span class="day-date">4月18日（土）- Day 2</span>
+                    </div>
+                    <div class="schedule-list">
+                        <div class="schedule-item">
+                            <span class="time">14:20</span>
+                            <div class="activity">
+                                <div class="title">ヴェネチア到着（VCE） <span class="tag flight">フライト</span></div>
+                                <div class="detail">マルコ・ポーロ空港</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">15:30</span>
+                            <div class="activity">
+                                <div class="title">市内移動・ホテルチェックイン</div>
+                                <div class="detail">ヴァポレット（水上バス）または水上タクシーで市内へ</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">17:00</span>
+                            <div class="activity">
+                                <div class="title">サン・マルコ広場／リアルト周辺散策</div>
+                                <div class="detail">到着日は軽めに街の雰囲気を楽しむ</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">20:00</span>
+                            <div class="activity">
+                                <div class="title">ディナー</div>
+                                <div class="detail">運河沿いのリストランテでシーフード料理</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="day-card">
+                    <div class="day-header">
+                        <div class="day-number">
+                            <span class="num">19</span>
+                            <span class="day">SUN</span>
+                        </div>
+                        <span class="day-date">4月19日（日）- Day 3</span>
+                    </div>
+                    <div class="schedule-list">
+                        <div class="schedule-item">
+                            <span class="time">9:00</span>
+                            <div class="activity">
+                                <div class="title">サン・マルコ寺院 <span class="tag must">要予約</span></div>
+                                <div class="detail">黄金のモザイク画は必見 | <a href="https://tickets.basilicasanmarco.it/en/" target="_blank" style="color:#00d4aa;">公式予約サイト</a></div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">11:00</span>
+                            <div class="activity">
+                                <div class="title">ドゥカーレ宮殿 <span class="tag must">要予約</span></div>
+                                <div class="detail">ため息橋も内部から見学可能 | <a href="https://palazzoducale.visitmuve.it/en/plan-your-visit/tickets/" target="_blank" style="color:#00d4aa;">公式予約サイト</a></div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">13:00</span>
+                            <div class="activity">
+                                <div class="title">ランチ</div>
+                                <div class="detail">バーカロ（立ち飲み居酒屋）でチケッティを</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">15:00</span>
+                            <div class="activity">
+                                <div class="title">ゴンドラで街並み巡り <span class="tag must">おすすめ</span></div>
+                                <div class="detail">約30分 €80〜100（交渉可）小運河から眺めるヴェネチアは格別</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">16:00</span>
+                            <div class="activity">
+                                <div class="title">Pandora ヴェネチア店 <span class="tag must">限定チャーム</span></div>
+                                <div class="detail">ゴンドラ・ヴェネチアのライオン等 | <a href="https://stores.pandora.net/" target="_blank" style="color:#00d4aa;">San Marco 212/217</a></div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">17:00</span>
+                            <div class="activity">
+                                <div class="title">ブラーノ島 or ムラーノ島（時間あれば）</div>
+                                <div class="detail">カラフルな街並み／ガラス工房</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">20:00</span>
+                            <div class="activity">
+                                <div class="title">ディナー・夜のヴェネチア散策</div>
+                                <div class="detail">自由時間</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ミラノ -->
+        <section class="city-section">
+            <div class="city-header milano">
+                <span class="city-icon">🏰</span>
+                <div class="city-info">
+                    <h2>ミラノ</h2>
+                    <p class="stay">2泊 ｜ 4/20（月）〜 4/22（水）</p>
+                </div>
+            </div>
+            <div class="days-container">
+                <div class="day-card">
+                    <div class="day-header">
+                        <div class="day-number">
+                            <span class="num">20</span>
+                            <span class="day">MON</span>
+                        </div>
+                        <span class="day-date">4月20日（月）- Day 4</span>
+                    </div>
+                    <div class="schedule-list">
+                        <div class="schedule-item">
+                            <span class="time">8:30</span>
+                            <div class="activity">
+                                <div class="title">ホテルチェックアウト</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">9:30</span>
+                            <div class="activity">
+                                <div class="title">ヴェネチア → ミラノ移動 <span class="tag move">移動</span></div>
+                                <div class="detail">高速鉄道 Italo/Frecciarossa（約2時間30分）</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">12:00</span>
+                            <div class="activity">
+                                <div class="title">ミラノ中央駅 到着</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">12:30</span>
+                            <div class="activity">
+                                <div class="title">ホテルチェックイン・ランチ</div>
+                                <div class="detail">ミラノ風カツレツ（コトレッタ）を堪能</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">14:30</span>
+                            <div class="activity">
+                                <div class="title">ドゥオーモ（ミラノ大聖堂）</div>
+                                <div class="detail">屋上テラスからの眺めは必見</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">16:30</span>
+                            <div class="activity">
+                                <div class="title">ガッレリア・ヴィットーリオ・エマヌエーレ2世</div>
+                                <div class="detail">美しいアーケード、老舗カフェでアペリティーボ</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">17:30</span>
+                            <div class="activity">
+                                <div class="title">Pandora ミラノ店 <span class="tag must">限定チャーム</span></div>
+                                <div class="detail">ミラノ大聖堂チャーム等 | <a href="https://stores.pandora.net/" target="_blank" style="color:#00d4aa;">Corso Buenos Aires 25</a></div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">19:00</span>
+                            <div class="activity">
+                                <div class="title">ディナー</div>
+                                <div class="detail">自由時間</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="day-card">
+                    <div class="day-header">
+                        <div class="day-number">
+                            <span class="num">21</span>
+                            <span class="day">TUE</span>
+                        </div>
+                        <span class="day-date">4月21日（火）- Day 5</span>
+                    </div>
+                    <div class="schedule-list">
+                        <div class="schedule-item">
+                            <span class="time">9:00</span>
+                            <div class="activity">
+                                <div class="title">「最後の晩餐」鑑賞 <span class="tag must">要予約</span></div>
+                                <div class="detail">サンタ・マリア・デッレ・グラツィエ教会（見学15分制限）| <a href="https://cenacolovinciano.vivaticket.it/en" target="_blank" style="color:#00d4aa;">公式予約サイト</a></div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">10:30</span>
+                            <div class="activity">
+                                <div class="title">スフォルツェスコ城</div>
+                                <div class="detail">ミケランジェロの遺作「ロンダニーニのピエタ」</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">12:30</span>
+                            <div class="activity">
+                                <div class="title">ランチ</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">14:00</span>
+                            <div class="activity">
+                                <div class="title">ブレラ地区散策</div>
+                                <div class="detail">アートギャラリーやおしゃれなカフェが並ぶエリア</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">16:00</span>
+                            <div class="activity">
+                                <div class="title">ナヴィリオ運河エリア（時間あれば）</div>
+                                <div class="detail">おしゃれなカフェやショップが並ぶエリア</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">19:00</span>
+                            <div class="activity">
+                                <div class="title">ディナー</div>
+                                <div class="detail">自由時間</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- フィレンツェ -->
+        <section class="city-section">
+            <div class="city-header firenze">
+                <span class="city-icon">🎨</span>
+                <div class="city-info">
+                    <h2>フィレンツェ</h2>
+                    <p class="stay">2泊 ｜ 4/22（水）〜 4/24（金）</p>
+                </div>
+            </div>
+            <div class="days-container">
+                <div class="day-card">
+                    <div class="day-header">
+                        <div class="day-number">
+                            <span class="num">22</span>
+                            <span class="day">WED</span>
+                        </div>
+                        <span class="day-date">4月22日（水）- Day 6</span>
+                    </div>
+                    <div class="schedule-list">
+                        <div class="schedule-item">
+                            <span class="time">8:30</span>
+                            <div class="activity">
+                                <div class="title">ホテルチェックアウト</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">9:30</span>
+                            <div class="activity">
+                                <div class="title">ミラノ → フィレンツェ移動 <span class="tag move">移動</span></div>
+                                <div class="detail">高速鉄道 Italo/Frecciarossa（約1時間50分）</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">11:30</span>
+                            <div class="activity">
+                                <div class="title">フィレンツェSMN駅 到着</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">12:00</span>
+                            <div class="activity">
+                                <div class="title">ホテルチェックイン・ランチ</div>
+                                <div class="detail">トスカーナ料理を堪能</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">14:00</span>
+                            <div class="activity">
+                                <div class="title">ドゥオーモ（サンタ・マリア・デル・フィオーレ大聖堂）</div>
+                                <div class="detail">クーポラに登る場合は要予約</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">16:00</span>
+                            <div class="activity">
+                                <div class="title">シニョリーア広場・ヴェッキオ宮殿</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">17:00</span>
+                            <div class="activity">
+                                <div class="title">Pandora フィレンツェ店 <span class="tag must">限定チャーム</span></div>
+                                <div class="detail">イタリア限定チャーム | <a href="https://apoggi.com/en/collections/pandora" target="_blank" style="color:#00d4aa;">Via Calzaiuoli（ドゥオーモ近く）</a></div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">17:30</span>
+                            <div class="activity">
+                                <div class="title">ポンテ・ヴェッキオ（ヴェッキオ橋）</div>
+                                <div class="detail">夕暮れ時がおすすめ</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">19:30</span>
+                            <div class="activity">
+                                <div class="title">ディナー</div>
+                                <div class="detail">自由時間 - ビステッカ・アッラ・フィオレンティーナがおすすめ</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="day-card">
+                    <div class="day-header">
+                        <div class="day-number">
+                            <span class="num">23</span>
+                            <span class="day">THU</span>
+                        </div>
+                        <span class="day-date">4月23日（木）- Day 7</span>
+                    </div>
+                    <div class="schedule-list">
+                        <div class="schedule-item">
+                            <span class="time">8:30</span>
+                            <div class="activity">
+                                <div class="title">ウフィツィ美術館 <span class="tag must">要予約</span></div>
+                                <div class="detail">ボッティチェリ「ヴィーナスの誕生」「春」など | <a href="https://www.uffizi.it/en/tickets" target="_blank" style="color:#00d4aa;">公式予約サイト</a></div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">12:00</span>
+                            <div class="activity">
+                                <div class="title">ランチ</div>
+                                <div class="detail">中央市場（メルカート・チェントラーレ）で食べ歩き</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">14:00</span>
+                            <div class="activity">
+                                <div class="title">街歩き・ショッピング</div>
+                                <div class="detail">革製品の本場、サンタ・クローチェ地区など</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">17:00</span>
+                            <div class="activity">
+                                <div class="title">ミケランジェロ広場 <span class="tag must">夕日スポット</span></div>
+                                <div class="detail">フィレンツェの絶景パノラマ。日没に合わせて</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">19:30</span>
+                            <div class="activity">
+                                <div class="title">ディナー</div>
+                                <div class="detail">自由時間</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ローマ -->
+        <section class="city-section">
+            <div class="city-header roma">
+                <span class="city-icon">🏛️</span>
+                <div class="city-info">
+                    <h2>ローマ</h2>
+                    <p class="stay">4泊 ｜ 4/24（金）〜 4/28（火）</p>
+                </div>
+            </div>
+            <div class="days-container">
+                <div class="day-card">
+                    <div class="day-header">
+                        <div class="day-number">
+                            <span class="num">24</span>
+                            <span class="day">FRI</span>
+                        </div>
+                        <span class="day-date">4月24日（金）- Day 8</span>
+                    </div>
+                    <div class="schedule-list">
+                        <div class="schedule-item">
+                            <span class="time">8:30</span>
+                            <div class="activity">
+                                <div class="title">ホテルチェックアウト</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">9:30</span>
+                            <div class="activity">
+                                <div class="title">フィレンツェ → ローマ移動 <span class="tag move">移動</span></div>
+                                <div class="detail">高速鉄道 Italo/Frecciarossa（約1時間30分）</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">11:00</span>
+                            <div class="activity">
+                                <div class="title">ローマ・テルミニ駅 到着</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">11:30</span>
+                            <div class="activity">
+                                <div class="title">ホテルチェックイン・ランチ</div>
+                                <div class="detail">ローマ風パスタ（カルボナーラ、カチョエペペ）を堪能</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">14:00</span>
+                            <div class="activity">
+                                <div class="title">スペイン広場・スペイン階段</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">15:00</span>
+                            <div class="activity">
+                                <div class="title">コンドッティ通りでショッピング</div>
+                                <div class="detail">高級ブランド街</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">16:00</span>
+                            <div class="activity">
+                                <div class="title">Pandora ローマ店 <span class="tag must">限定チャーム</span></div>
+                                <div class="detail">コロッセオ・サンピエトロ大聖堂等 | <a href="https://stores.pandora.net/" target="_blank" style="color:#00d4aa;">スペイン広場周辺</a></div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">17:00</span>
+                            <div class="activity">
+                                <div class="title">パンテオン</div>
+                                <div class="detail">古代ローマ建築の傑作</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">19:00</span>
+                            <div class="activity">
+                                <div class="title">トレビの泉（夜景）</div>
+                                <div class="detail">ライトアップされた噴水は格別</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">20:00</span>
+                            <div class="activity">
+                                <div class="title">ディナー</div>
+                                <div class="detail">自由時間</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="day-card">
+                    <div class="day-header">
+                        <div class="day-number">
+                            <span class="num">25</span>
+                            <span class="day">SAT</span>
+                        </div>
+                        <span class="day-date">4月25日（土）- Day 9</span>
+                    </div>
+                    <div class="schedule-list">
+                        <div class="schedule-item">
+                            <span class="time">8:30</span>
+                            <div class="activity">
+                                <div class="title">コロッセオ <span class="tag must">要予約</span></div>
+                                <div class="detail">地下・アリーナフロアツアーがおすすめ | <a href="https://colosseo.it/en/opening-times-and-tickets/" target="_blank" style="color:#00d4aa;">公式予約サイト</a></div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">11:00</span>
+                            <div class="activity">
+                                <div class="title">フォロ・ロマーノ</div>
+                                <div class="detail">古代ローマの政治・宗教の中心地</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">13:00</span>
+                            <div class="activity">
+                                <div class="title">パラティーノの丘</div>
+                                <div class="detail">皇帝たちの宮殿跡。眺望も素晴らしい</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">14:30</span>
+                            <div class="activity">
+                                <div class="title">ランチ</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">16:00</span>
+                            <div class="activity">
+                                <div class="title">真実の口（サンタ・マリア・イン・コスメディン教会）</div>
+                                <div class="detail">「ローマの休日」で有名</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">17:30</span>
+                            <div class="activity">
+                                <div class="title">チルコ・マッシモ（大競技場跡）</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">19:30</span>
+                            <div class="activity">
+                                <div class="title">ディナー</div>
+                                <div class="detail">自由時間</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="day-card">
+                    <div class="day-header">
+                        <div class="day-number">
+                            <span class="num">26</span>
+                            <span class="day">SUN</span>
+                        </div>
+                        <span class="day-date">4月26日（日）- Day 10 ⚽ サッカー観戦日</span>
+                    </div>
+                    <div class="schedule-list">
+                        <div class="schedule-item">
+                            <span class="time">10:00</span>
+                            <div class="activity">
+                                <div class="title">軽め観光 or ホテルで休憩</div>
+                                <div class="detail">夜の試合に備えてゆっくり過ごす</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">12:00</span>
+                            <div class="activity">
+                                <div class="title">ナヴォーナ広場周辺散策</div>
+                                <div class="detail">バロック様式の噴水群</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">13:30</span>
+                            <div class="activity">
+                                <div class="title">ランチ</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">16:00</span>
+                            <div class="activity">
+                                <div class="title">ホテルで休憩・準備</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">17:30</span>
+                            <div class="activity">
+                                <div class="title">早めの夕食</div>
+                                <div class="detail">スタジアム周辺 or 市内で</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">19:00</span>
+                            <div class="activity">
+                                <div class="title">スタディオ・オリンピコへ移動</div>
+                                <div class="detail">地下鉄A線 Flaminio駅からトラム2番</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">20:45</span>
+                            <div class="activity">
+                                <div class="title">セリエA ラツィオ vs ウディネーゼ <span class="tag soccer">サッカー観戦</span></div>
+                                <div class="detail">スタディオ・オリンピコ ※開始時刻は直前確定</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">23:00</span>
+                            <div class="activity">
+                                <div class="title">試合終了・ホテルへ戻る</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="day-card">
+                    <div class="day-header">
+                        <div class="day-number">
+                            <span class="num">27</span>
+                            <span class="day">MON</span>
+                        </div>
+                        <span class="day-date">4月27日（月）- Day 11</span>
+                    </div>
+                    <div class="schedule-list">
+                        <div class="schedule-item">
+                            <span class="time">8:30</span>
+                            <div class="activity">
+                                <div class="title">サン・ピエトロ大聖堂</div>
+                                <div class="detail">朝イチは空いてる！ミケランジェロ「ピエタ」、クーポラからの眺め</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">10:30</span>
+                            <div class="activity">
+                                <div class="title">サンタンジェロ城</div>
+                                <div class="detail">テヴェレ川沿いの要塞。屋上からの眺め</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">11:00</span>
+                            <div class="activity">
+                                <div class="title">ランチ（バチカン周辺で軽めに）</div>
+                                <div class="detail">12:00入場に備えて早めに</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">12:00</span>
+                            <div class="activity">
+                                <div class="title">バチカン美術館 <span class="tag must">予約済</span></div>
+                                <div class="detail">システィーナ礼拝堂（ミケランジェロの天井画）| オーディオガイド付き</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">15:00</span>
+                            <div class="activity">
+                                <div class="title">見学終了・休憩</div>
+                                <div class="detail">約3時間の見学</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">15:30</span>
+                            <div class="activity">
+                                <div class="title">お土産探し・最後の散策</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">19:30</span>
+                            <div class="activity">
+                                <div class="title">最後のディナー</div>
+                                <div class="detail">アマトリチャーナなどローマ名物を</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">22:00</span>
+                            <div class="activity">
+                                <div class="title">早めに就寝</div>
+                                <div class="detail">翌朝のフライトに備えて</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="day-card">
+                    <div class="day-header">
+                        <div class="day-number">
+                            <span class="num">28</span>
+                            <span class="day">TUE</span>
+                        </div>
+                        <span class="day-date">4月28日（火）- Day 12（最終日）</span>
+                    </div>
+                    <div class="schedule-list">
+                        <div class="schedule-item">
+                            <span class="time">6:00</span>
+                            <div class="activity">
+                                <div class="title">起床・準備</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">7:00</span>
+                            <div class="activity">
+                                <div class="title">ホテルチェックアウト</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">7:30</span>
+                            <div class="activity">
+                                <div class="title">テルミニ駅 → フィウミチーノ空港 <span class="tag move">移動</span></div>
+                                <div class="detail">レオナルド・エクスプレス（約32分）</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">8:15</span>
+                            <div class="activity">
+                                <div class="title">フィウミチーノ空港（FCO）到着</div>
+                                <div class="detail">チェックイン・出国手続き</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">10:30</span>
+                            <div class="activity">
+                                <div class="title">ローマ発（FCO） <span class="tag flight">フライト</span></div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">翌13:50</span>
+                            <div class="activity">
+                                <div class="title">日本到着</div>
+                                <div class="detail">お疲れ様でした！</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 備考 -->
+        <section class="notes-section">
+            <h3>旅の準備・注意事項</h3>
+            <div class="notes-grid">
+                <div class="note-card">
+                    <h4>⚽ サッカーチケット</h4>
+                    <ul>
+                        <li><a href="https://www.sslazio.it/en/tickets" target="_blank" style="color:#00d4aa;">ラツィオ公式サイト</a>で早めに購入</li>
+                        <li>座席はCurva Nord（ラツィオサポーター席）</li>
+                        <li>パスポート必須（入場時チェックあり）</li>
+                        <li>キックオフ時刻は直前に確定</li>
+                    </ul>
+                </div>
+                <div class="note-card">
+                    <h4>🎫 要事前予約</h4>
+                    <ul>
+                        <li><a href="https://cenacolovinciano.vivaticket.it/en" target="_blank" style="color:#00d4aa;">最後の晩餐（ミラノ）</a> - 数ヶ月前から</li>
+                        <li><a href="https://www.uffizi.it/en/tickets" target="_blank" style="color:#00d4aa;">ウフィツィ美術館（フィレンツェ）</a></li>
+                        <li><a href="https://www.museivaticani.va/content/museivaticani/en/visita-i-musei/biglietteria-on-line.html" target="_blank" style="color:#00d4aa;">バチカン美術館（ローマ）</a></li>
+                        <li><a href="https://colosseo.it/en/opening-times-and-tickets/" target="_blank" style="color:#00d4aa;">コロッセオ（ローマ）</a></li>
+                        <li><a href="https://tickets.basilicasanmarco.it/en/" target="_blank" style="color:#00d4aa;">サン・マルコ寺院（ヴェネチア）</a></li>
+                        <li><a href="https://palazzoducale.visitmuve.it/en/plan-your-visit/tickets/" target="_blank" style="color:#00d4aa;">ドゥカーレ宮殿（ヴェネチア）</a></li>
+                    </ul>
+                </div>
+                <div class="note-card">
+                    <h4>🚄 電車チケット</h4>
+                    <ul>
+                        <li><a href="https://www.trenitalia.com/en.html" target="_blank" style="color:#00d4aa;">Trenitalia（トレニタリア）</a></li>
+                        <li><a href="https://www.italotreno.it/en" target="_blank" style="color:#00d4aa;">Italo（イタロ）</a></li>
+                        <li>同じ区間でも料金が違う→両方比較！</li>
+                        <li>早割（2週間前〜）で半額近くになることも</li>
+                        <li>1等車（Prima）もおすすめ</li>
+                    </ul>
+                </div>
+                <div class="note-card">
+                    <h4>💡 その他のヒント</h4>
+                    <ul>
+                        <li>4月は気候良好（15-22°C程度）</li>
+                        <li>スリに注意（特に観光地・電車内）</li>
+                        <li>レストランは coperto（席料）あり</li>
+                        <li>日曜は閉まる店も多い</li>
+                    </ul>
+                </div>
+                <div class="note-card">
+                    <h4>🚕 タクシー・配車アプリ</h4>
+                    <ul>
+                        <li><a href="https://www.ittaxi.it/" target="_blank" style="color:#00d4aa;">IT Taxi</a> - イタリア公式。全都市対応</li>
+                        <li><a href="https://www.apptaxi.it/" target="_blank" style="color:#00d4aa;">AppTaxi</a> - ヴェネチア水上タクシーも可</li>
+                        <li><a href="https://www.free-now.com/" target="_blank" style="color:#00d4aa;">FREE NOW</a> - 欧州大手。ローマ・ミラノ</li>
+                        <li>Uber Blackのみ（ヴェネチアは不可）</li>
+                        <li>アプリで呼べば料金事前表示で安心</li>
+                    </ul>
+                </div>
+                <div class="note-card">
+                    <h4>✈️ 空港↔市内 定額料金</h4>
+                    <ul>
+                        <li>ローマ FCO ↔ 市内：€50（定額）</li>
+                        <li>ミラノ マルペンサ ↔ 市内：€95（定額）</li>
+                        <li>ヴェネチア：水上タクシー€120〜 / バス€10</li>
+                        <li>正規タクシー乗り場を使うこと</li>
+                        <li>客引きには絶対乗らない！</li>
+                    </ul>
+                </div>
+                <div class="note-card">
+                    <h4>🏨 ヴェネチア ホテル選び</h4>
+                    <ul>
+                        <li>おすすめ：リアルト〜サン・マルコ間</li>
+                        <li>空港からAlilaguna水上バスで直通</li>
+                        <li>駅から遠いと橋を何度も渡る羽目に</li>
+                        <li>翌日の駅へのアクセスも要確認</li>
+                        <li>Google Mapで徒歩ルートを事前チェック</li>
+                    </ul>
+                </div>
+                <div class="note-card">
+                    <h4>🏨 ミラノ ホテル選び</h4>
+                    <ul>
+                        <li>おすすめ：ドゥオーモ周辺 or 中央駅周辺</li>
+                        <li>中央駅周辺は移動に便利＆比較的安い</li>
+                        <li>ドゥオーモ周辺は観光に最高だが高め</li>
+                        <li>地下鉄M1/M3沿線なら移動楽々</li>
+                        <li>駅東側は治安やや注意</li>
+                    </ul>
+                </div>
+                <div class="note-card">
+                    <h4>🏨 フィレンツェ ホテル選び</h4>
+                    <ul>
+                        <li>おすすめ：SMN駅〜ドゥオーモ間</li>
+                        <li>街がコンパクトなので徒歩で回れる</li>
+                        <li>駅近なら荷物移動が楽</li>
+                        <li>アルノ川南側（オルトラルノ）も穴場</li>
+                        <li>ZTL（車両制限区域）内はタクシー注意</li>
+                    </ul>
+                </div>
+                <div class="note-card">
+                    <h4>🏨 ローマ ホテル選び</h4>
+                    <ul>
+                        <li>おすすめ：テルミニ駅周辺 or 歴史地区</li>
+                        <li>テルミニ周辺は空港アクセス抜群</li>
+                        <li>スペイン広場〜トレビ周辺は観光に便利</li>
+                        <li>トラステヴェレは雰囲気◎だが中心から少し遠い</li>
+                        <li>地下鉄A/B線沿線が移動しやすい</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
