@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" href="/static/image1.png">
+    <link rel="icon" type="image/png" href="/static/image1.png">
+    <title>チケット | イタリア旅行 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #fff;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4aa, #7b68ee, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .header .subtitle {
+            color: #a0a0a0;
+            font-size: 0.95rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .ticket-section {
+            margin-bottom: 40px;
+        }
+
+        .ticket-label {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #00d4aa;
+            margin-bottom: 15px;
+            padding-left: 12px;
+            border-left: 3px solid #00d4aa;
+        }
+
+        .ticket-image-wrap {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .ticket-image-wrap img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .logout-wrap {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .logout-btn {
+            display: inline-block;
+            padding: 10px 28px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 25px;
+            color: #a0a0a0;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ウフィツィ美術館 チケット</h1>
+            <p class="subtitle">4月23日（木）8:30 ｜ 注文番号: F637630</p>
+        </div>
+
+        <div class="ticket-section">
+            <div class="ticket-label">チケット 1</div>
+            <div class="ticket-image-wrap">
+                <img src="/static/ticket_uffizi_1.jpg" alt="ウフィツィ美術館 チケット1">
+            </div>
+        </div>
+
+        <div class="ticket-section">
+            <div class="ticket-label">チケット 2</div>
+            <div class="ticket-image-wrap">
+                <img src="/static/ticket_uffizi_2.jpg" alt="ウフィツィ美術館 チケット2">
+            </div>
+        </div>
+
+        <div class="logout-wrap">
+            <a href="/tickets/logout" class="logout-btn">ログアウト</a>
+        </div>
+    </div>
+</body>
+</html>

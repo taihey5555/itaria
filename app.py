@@ -1,10 +1,12 @@
-from flask import Flask, render_template, request, jsonify, g
+from flask import Flask, render_template, request, jsonify, g, session, redirect, url_for
 import json
 import os
 import sqlite3
 import time
 
 app = Flask(__name__)
+app.secret_key = os.environ.get('SECRET_KEY', 'italy-trip-2026-secret-key')
+TICKET_PASSWORD = os.environ.get('TICKET_PASSWORD', 'uffizi2026')
 DB_PATH = os.path.join(os.path.dirname(__file__), "data.sqlite3")
 
 
@@ -49,6 +51,29 @@ def packing():
 @app.route('/reservations')
 def reservations():
     return render_template('reservations.html')
+
+@app.route('/tickets')
+def tickets():
+    if not session.get('ticket_auth'):
+        return redirect(url_for('tickets_login'))
+    return render_template('tickets.html')
+
+@app.route('/tickets/login', methods=['GET', 'POST'])
+def tickets_login():
+    error = None
+    if request.method == 'POST':
+        password = request.form.get('password', '')
+        if password == TICKET_PASSWORD:
+            session['ticket_auth'] = True
+            return redirect(url_for('tickets'))
+        else:
+            error = 'パスワードが違います'
+    return render_template('tickets_login.html', error=error)
+
+@app.route('/tickets/logout')
+def tickets_logout():
+    session.pop('ticket_auth', None)
+    return redirect(url_for('tickets_login'))
 
 
 @app.get('/api/packing')
