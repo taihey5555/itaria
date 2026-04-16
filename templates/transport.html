@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" href="/static/image1.png">
+    <link rel="icon" type="image/png" href="/static/image1.png">
+    <title>移動・タクシー | イタリア旅行 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            padding: 100px 20px 40px;
+            color: #fff;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4aa, #7b68ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .nav-links a.active {
+            background: linear-gradient(135deg, #00d4aa, #7b68ee);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #fff;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4aa, #7b68ee, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            font-size: 1.1rem;
+            color: #a0a0a0;
+        }
+
+        .page-grid {
+            display: grid;
+            gap: 24px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 26px 28px;
+        }
+
+        .card h2 {
+            font-size: 1.3rem;
+            margin-bottom: 16px;
+            color: #00d4aa;
+        }
+
+        .card p {
+            color: #d8d8d8;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .list {
+            list-style: none;
+            display: grid;
+            gap: 10px;
+        }
+
+        .list li {
+            background: rgba(255,255,255,0.04);
+            border-radius: 12px;
+            padding: 14px 16px;
+            line-height: 1.6;
+            color: #d8d8d8;
+        }
+
+        .list strong {
+            color: #fff;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            margin-left: 8px;
+        }
+
+        .tag.best { background: #00b894; color: #102030; }
+        .tag.ok { background: #0077b6; }
+        .tag.note { background: #9d4edd; }
+
+        .steps {
+            display: grid;
+            gap: 14px;
+        }
+
+        .step-card {
+            background: rgba(255,255,255,0.04);
+            border-radius: 14px;
+            padding: 18px 20px;
+        }
+
+        .step-card h3 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .step-card p {
+            margin: 0;
+            color: #c9c9c9;
+        }
+
+        .sources a {
+            color: #00d4aa;
+            text-decoration: none;
+        }
+
+        .sources a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(26, 26, 46, 0.98);
+                flex-direction: column;
+                padding: 20px;
+                gap: 10px;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                text-align: center;
+                padding: 15px 20px;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .header h1 {
+                font-size: 1.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-logo">ITALY 2026</div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="nav-links">
+            <a href="/">スケジュール</a>
+            <a href="/packing">持ち物リスト</a>
+            <a href="/reservations">予約リスト</a>
+            <a href="/transport" class="active">移動・タクシー</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="header">
+            <h1>移動・タクシー</h1>
+            <p class="subtitle">配車アプリの使い分けと、この旅程でタクシーを使う場面の整理</p>
+        </header>
+
+        <div class="page-grid">
+            <section class="card">
+                <h2>配車アプリの結論</h2>
+                <p>Uber 一本で行くという感じではなく、イタリアでは今も正規タクシー配車アプリが主流です。</p>
+                <ul class="list">
+                    <li><strong>第一候補:</strong> appTaxi <span class="tag best">おすすめ</span></li>
+                    <li><strong>次点:</strong> itTaxi <span class="tag ok">保険</span></li>
+                    <li><strong>Uber:</strong> 補助的に入れておくのはあり <span class="tag note">比較用</span></li>
+                </ul>
+            </section>
+
+            <section class="card">
+                <h2>使い分け</h2>
+                <ul class="list">
+                    <li><strong>ローマ・ミラノ・フィレンツェ:</strong> appTaxi か itTaxi を優先</li>
+                    <li><strong>ヴェネチア:</strong> appTaxi が分かりやすい。水上タクシー案内も見やすい</li>
+                    <li><strong>早朝空港移動:</strong> 前日予約できる appTaxi / itTaxi が安心</li>
+                    <li><strong>Uber:</strong> 料金比較や代替手段として入れておくのはあり</li>
+                </ul>
+                <p>この旅行なら <strong>appTaxi を入れて、保険で itTaxi も入れる</strong> のが一番実用的です。</p>
+            </section>
+
+            <section class="card">
+                <h2>この旅程でタクシーを使う場面</h2>
+                <div class="steps">
+                    <div class="step-card">
+                        <h3>4/18 VCE → Courtyard by Marriott Venice Airport</h3>
+                        <p>夜 22:10 着。空港近くでも初日なのでタクシーが楽です。ここはほぼタクシー前提。</p>
+                    </div>
+                    <div class="step-card">
+                        <h3>4/28 The Inn at the Spanish Steps → FCO</h3>
+                        <p>6:30 発の早朝便。ここはタクシー前提が自然です。</p>
+                    </div>
+                    <div class="step-card">
+                        <h3>状況次第で使ってもいい場面</h3>
+                        <p>4/19 空港ホテル → AC Hotel Venezia、4/21 Milano Centrale → Fiorentini Residence MILANO、4/24 Roma Termini → The Inn at the Spanish Steps は、公共交通で十分ですが、荷物が重い時や疲れている時はタクシーでも可です。</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card">
+                <h2>観光中は必要か</h2>
+                <ul class="list">
+                    <li><strong>ヴェネチア:</strong> 徒歩とヴァポレット中心。必要なら水上タクシー</li>
+                    <li><strong>ミラノ:</strong> ドゥオーモ周辺に固まっていて、徒歩と地下鉄で足ります</li>
+                    <li><strong>フィレンツェ:</strong> 街がかなりコンパクトで徒歩向き</li>
+                    <li><strong>ローマ:</strong> 地下鉄と徒歩で主要観光地をかなり回れます</li>
+                </ul>
+                <p>観光だけで見ればタクシーはほぼ不要です。必要なのは空港移動と、一部の深夜・早朝・疲れている日の移動くらいです。</p>
+            </section>
+
+            <section class="card sources">
+                <h2>参考リンク</h2>
+                <ul class="list">
+                    <li><a href="https://apptaxi.it/en/coverage/" target="_blank" rel="noopener noreferrer">appTaxi 対応都市</a></li>
+                    <li><a href="https://ittaxi.it/en/about-us/" target="_blank" rel="noopener noreferrer">itTaxi 概要</a></li>
+                    <li><a href="https://ittaxi.it/" target="_blank" rel="noopener noreferrer">itTaxi 都市一覧</a></li>
+                    <li><a href="https://www.uber.com/global/en/r/italy/cities/" target="_blank" rel="noopener noreferrer">Uber Italy</a></li>
+                </ul>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector('.hamburger').classList.toggle('active');
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

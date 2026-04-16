@@ -50,6 +50,10 @@ def packing():
 def reservations():
     return render_template('reservations.html')
 
+@app.route('/transport')
+def transport():
+    return render_template('transport.html')
+
 
 @app.get('/api/packing')
 def get_packing():

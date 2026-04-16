@@ -279,6 +279,40 @@
             color: #a0a0a0;
         }
 
+        .detail-toggle {
+            margin-top: 8px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 10px 12px;
+        }
+
+        .detail-toggle summary {
+            cursor: pointer;
+            color: #00d4aa;
+            font-size: 0.85rem;
+            font-weight: 500;
+            list-style: none;
+        }
+
+        .detail-toggle summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .detail-toggle[open] summary {
+            margin-bottom: 8px;
+        }
+
+        .detail-toggle ol {
+            margin-left: 18px;
+            color: #c0c0c0;
+            font-size: 0.82rem;
+        }
+
+        .detail-toggle li + li {
+            margin-top: 6px;
+        }
+
         .tag {
             display: inline-block;
             padding: 3px 10px;
@@ -419,6 +453,7 @@
             <a href="/" class="active">スケジュール</a>
             <a href="/packing">持ち物リスト</a>
             <a href="/reservations">予約リスト</a>
+            <a href="/transport">移動・タクシー</a>
         </div>
     </nav>
     <script>
@@ -468,7 +503,14 @@
                     </div>
                     <div class="schedule-list">
                         <div class="schedule-item">
-                            <span class="time">20:00</span>
+                            <span class="time">7:10</span>
+                            <div class="activity">
+                                <div class="title">熊野前駅を出発 <span class="tag move">移動</span></div>
+                                <div class="detail">羽田空港第3ターミナルへ。国際線3時間前到着を見込んだ安全寄りの目安</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">8:45</span>
                             <div class="activity">
                                 <div class="title">羽田空港到着</div>
                                 <div class="detail">チェックイン・出国手続き</div>
@@ -492,10 +534,45 @@
                 <span class="city-icon">🚣</span>
                 <div class="city-info">
                     <h2>ヴェネチア</h2>
-                    <p class="stay">2泊 ｜ 4/19（日）〜 4/21（火）</p>
+                    <p class="stay">3泊 ｜ 4/18（土）〜 4/21（火）</p>
+                    <p class="stay">4/18: Courtyard by Marriott Venice Airport</p>
+                    <p class="stay">4/19-20: AC Hotel Venezia</p>
                 </div>
             </div>
             <div class="days-container">
+                <div class="day-card">
+                    <div class="day-header">
+                        <div class="day-number">
+                            <span class="num">18</span>
+                            <span class="day">SAT</span>
+                        </div>
+                        <span class="day-date">4月18日（土）- Day 1（到着日）</span>
+                    </div>
+                    <div class="schedule-list">
+                        <div class="schedule-item">
+                            <span class="time">22:10</span>
+                            <div class="activity">
+                                <div class="title">ヴェネチア到着（VCE） <span class="tag flight">フライト</span></div>
+                                <div class="detail">マルコポーロ空港</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">23:00</span>
+                            <div class="activity">
+                                <div class="title">空港からホテルへ移動 <span class="tag move">移動</span></div>
+                                <div class="detail">Courtyard by Marriott Venice Airport へ。空港近くなのでタクシーで数分</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">23:30</span>
+                            <div class="activity">
+                                <div class="title">ホテル到着・チェックイン</div>
+                                <div class="detail">Courtyard by Marriott Venice Airport に宿泊。到着日は無理せず休息</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="day-card">
                     <div class="day-header">
                         <div class="day-number">
@@ -506,31 +583,74 @@
                     </div>
                     <div class="schedule-list">
                         <div class="schedule-item">
-                            <span class="time">14:05</span>
+                            <span class="time">8:00</span>
                             <div class="activity">
-                                <div class="title">ヴェネチア到着（VCE） JL8298便 <span class="tag flight">フライト</span></div>
-                                <div class="detail">マルコ・ポーロ空港（ドーハ 09:00発 → ヴェネチア 14:05着）</div>
+                                <div class="title">起床・朝食</div>
                             </div>
                         </div>
                         <div class="schedule-item">
-                            <span class="time">15:30</span>
+                            <span class="time">9:00</span>
                             <div class="activity">
-                                <div class="title">市内移動・ホテルチェックイン</div>
-                                <div class="detail">ヴァポレット（水上バス）または水上タクシーで市内へ</div>
+                                <div class="title">Courtyard by Marriott Venice Airport 出発 <span class="tag move">移動</span></div>
+                                <div class="detail">AC Hotel Venezia へ移動。ACTVチケット利用</div>
                             </div>
                         </div>
                         <div class="schedule-item">
-                            <span class="time">17:00</span>
+                            <span class="time">10:00</span>
                             <div class="activity">
-                                <div class="title">サン・マルコ広場／リアルト周辺散策</div>
-                                <div class="detail">到着日は軽めに街の雰囲気を楽しむ</div>
+                                <div class="title">AC Hotel Venezia で荷物預け</div>
+                                <div class="detail">Piazzale Roma 側に着いたら先に荷物を預ける</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">10:30</span>
+                            <div class="activity">
+                                <div class="title">サンマルコ広場／リアルト周辺を軽く散策</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">12:00</span>
+                            <div class="activity">
+                                <div class="title">ランチ</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">14:30</span>
+                            <div class="activity">
+                                <div class="title">サンマルコ寺院（Complete Experience） <span class="tag must">予約済</span></div>
+                                <div class="detail">14:30〜15:00 予約。黄金のモザイクとテラスの絶景を堪能 | <a href="https://tickets.basilicasanmarco.it/en/" target="_blank" style="color:#00d4aa;">公式予約サイト</a></div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">15:15</span>
+                            <div class="activity">
+                                <div class="title">ドゥカーレ宮殿</div>
+                                <div class="detail">寺院見学後にそのまま移動 | <a href="https://palazzoducale.visitmuve.it/en/plan-your-visit/tickets/" target="_blank" style="color:#00d4aa;">公式予約サイト</a></div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">17:30</span>
+                            <div class="activity">
+                                <div class="title">Pandora で限定チャーム確認 <span class="tag must">限定チャーム</span></div>
+                                <div class="detail">San Marco 212/217 | <a href="https://stores.pandora.net/" target="_blank" style="color:#00d4aa;">店舗検索</a></div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">18:45</span>
+                            <div class="activity">
+                                <div class="title">ゴンドラ <span class="tag must">おすすめ</span></div>
                             </div>
                         </div>
                         <div class="schedule-item">
                             <span class="time">20:00</span>
                             <div class="activity">
                                 <div class="title">ディナー</div>
-                                <div class="detail">運河沿いのリストランテでシーフード料理</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">21:30</span>
+                            <div class="activity">
+                                <div class="title">AC Hotel Venezia に戻る</div>
                             </div>
                         </div>
                     </div>
@@ -546,52 +666,52 @@
                     </div>
                     <div class="schedule-list">
                         <div class="schedule-item">
-                            <span class="time">9:00</span>
+                            <span class="time">8:30</span>
                             <div class="activity">
-                                <div class="title">ブラーノ島（またはムラーノ島）観光</div>
-                                <div class="detail">朝の涼しく空いている時間に、水上バス（ヴァポレット）でカラフルな街並みのブラーノ島へ。写真は午前中の方が綺麗に撮れます。</div>
+                                <div class="title">起床・朝食</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">9:30</span>
+                            <div class="activity">
+                                <div class="title">ブラーノ島へ出発 <span class="tag move">移動</span></div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">10:30</span>
+                            <div class="activity">
+                                <div class="title">ブラーノ島散策</div>
+                                <div class="detail">カラフルな街並みをゆっくり回る</div>
                             </div>
                         </div>
                         <div class="schedule-item">
                             <span class="time">13:00</span>
                             <div class="activity">
-                                <div class="title">サンマルコ広場周辺でランチ</div>
-                                <div class="detail">島から戻り、広場近くのリストランテで休憩。</div>
+                                <div class="title">ランチ</div>
                             </div>
                         </div>
                         <div class="schedule-item">
-                            <span class="time">14:30</span>
+                            <span class="time">15:00</span>
                             <div class="activity">
-                                <div class="title">サンマルコ寺院（Complete Experience） <span class="tag must">予約済</span></div>
-                                <div class="detail">時間厳守。黄金のモザイクと、テラスからの絶景を堪能します。 | <a href="https://tickets.basilicasanmarco.it/en/" target="_blank" style="color:#00d4aa;">公式予約サイト</a></div>
+                                <div class="title">本島へ戻る <span class="tag move">移動</span></div>
                             </div>
                         </div>
                         <div class="schedule-item">
-                            <span class="time">15:45</span>
+                            <span class="time">16:30</span>
                             <div class="activity">
-                                <div class="title">ドゥカーレ宮殿（好きな時間に入場）</div>
-                                <div class="detail">寺院のすぐ隣なので、見終わったらそのまま移動。ドゥカーレ宮殿は広いので、豪華な広間や「嘆きの橋」をじっくり歩きます。 | <a href="https://palazzoducale.visitmuve.it/en/plan-your-visit/tickets/" target="_blank" style="color:#00d4aa;">公式予約サイト</a></div>
+                                <div class="title">自由散策 or カフェ</div>
                             </div>
                         </div>
                         <div class="schedule-item">
-                            <span class="time">17:30</span>
+                            <span class="time">18:30</span>
                             <div class="activity">
-                                <div class="title">ヴェネツィア散策 ＆ パンドラ（Pandora）へ <span class="tag must">限定チャーム</span></div>
-                                <div class="detail">広場周辺にあるパンドラへ。ヴェネツィア限定チャームを記念にチェック。 | <a href="https://stores.pandora.net/" target="_blank" style="color:#00d4aa;">San Marco 212/217</a></div>
-                            </div>
-                        </div>
-                        <div class="schedule-item">
-                            <span class="time">18:45</span>
-                            <div class="activity">
-                                <div class="title">夕暮れのゴンドラ <span class="tag must">おすすめ</span></div>
-                                <div class="detail">日が沈み始めるこの時間帯が、最もロマンチックで「ヴェネツィアに来てよかった」と思える瞬間になります。</div>
+                                <div class="title">お土産・買い物</div>
                             </div>
                         </div>
                         <div class="schedule-item">
                             <span class="time">20:00</span>
                             <div class="activity">
                                 <div class="title">ディナー</div>
-                                <div class="detail">自由時間</div>
                             </div>
                         </div>
                     </div>
@@ -606,6 +726,7 @@
                 <div class="city-info">
                     <h2>ミラノ</h2>
                     <p class="stay">1泊 ｜ 4/21（火）〜 4/22（水）</p>
+                    <p class="stay">Fiorentini Residence MILANO</p>
                 </div>
             </div>
             <div class="days-container">
@@ -619,29 +740,45 @@
                     </div>
                     <div class="schedule-list">
                         <div class="schedule-item">
-                            <span class="time">8:30</span>
+                            <span class="time">9:30</span>
                             <div class="activity">
                                 <div class="title">ホテルチェックアウト</div>
                             </div>
                         </div>
                         <div class="schedule-item">
-                            <span class="time">9:30</span>
+                            <span class="time">10:48</span>
                             <div class="activity">
                                 <div class="title">ヴェネチア → ミラノ移動 <span class="tag move">移動</span></div>
-                                <div class="detail">高速鉄道 Italo/Frecciarossa（約2時間30分）</div>
+                                <div class="detail">Frecciarossa 9724｜Venezia S. Lucia 10:48発 → Milano Centrale 13:15着｜5号車 20C</div>
+                                <details class="detail-toggle">
+                                    <summary>AC Hotel Venezia から駅までの手順を見る</summary>
+                                    <ol>
+                                        <li>AC Hotel Venezia を出て Piazzale Roma 方面へ歩く</li>
+                                        <li>Scalzi橋を渡って Venezia S. Lucia 駅へ向かう</li>
+                                        <li>駅の電光掲示板で Frecciarossa 9724 とホーム番号を確認する</li>
+                                        <li>5号車 20C に乗車する</li>
+                                    </ol>
+                                </details>
                             </div>
                         </div>
                         <div class="schedule-item">
-                            <span class="time">12:00</span>
+                            <span class="time">13:15</span>
                             <div class="activity">
                                 <div class="title">ミラノ中央駅 到着</div>
                             </div>
                         </div>
                         <div class="schedule-item">
-                            <span class="time">12:30</span>
+                            <span class="time">13:35</span>
                             <div class="activity">
-                                <div class="title">ホテルチェックイン・ランチ</div>
-                                <div class="detail">ミラノ風カツレツ（コトレッタ）を堪能</div>
+                                <div class="title">Fiorentini Residence MILANO へ移動 <span class="tag move">移動</span></div>
+                                <div class="detail">Milano Centrale から地下鉄M3で Duomo へ。徒歩数分で到着</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">13:55</span>
+                            <div class="activity">
+                                <div class="title">Fiorentini Residence MILANO に荷物預け・ランチ</div>
+                                <div class="detail">12 Via Giuseppe Mazzini。ミラノ風カツレツ（コトレッタ）を堪能</div>
                             </div>
                         </div>
                         <div class="schedule-item">
@@ -674,7 +811,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </section>
 
@@ -685,6 +821,7 @@
                 <div class="city-info">
                     <h2>フィレンツェ</h2>
                     <p class="stay">2泊 ｜ 4/22（水）〜 4/24（金）</p>
+                    <p class="stay">B&B Hotel Firenze Laurus Al Duomo</p>
                 </div>
             </div>
             <div class="days-container">
@@ -698,29 +835,46 @@
                     </div>
                     <div class="schedule-list">
                         <div class="schedule-item">
-                            <span class="time">8:30</span>
+                            <span class="time">8:15</span>
                             <div class="activity">
                                 <div class="title">ホテルチェックアウト</div>
                             </div>
                         </div>
                         <div class="schedule-item">
-                            <span class="time">9:30</span>
+                            <span class="time">09:40</span>
                             <div class="activity">
                                 <div class="title">ミラノ → フィレンツェ移動 <span class="tag move">移動</span></div>
-                                <div class="detail">高速鉄道 Italo/Frecciarossa（約1時間50分）</div>
+                                <div class="detail">列車 9923｜Milano Centrale 09:40発 → Firenze SMN 11:35着｜Prima Business｜2号車 11・12番</div>
+                                <details class="detail-toggle">
+                                    <summary>Fiorentini Residence MILANO から駅までの手順を見る</summary>
+                                    <ol>
+                                        <li>Fiorentini Residence MILANO を出て Duomo 駅へ歩く</li>
+                                        <li>地下鉄 M3 の Comasina 方面に乗る</li>
+                                        <li>Duomo から Centrale FS まで移動する</li>
+                                        <li>Milano Centrale で列車 9923 とホーム番号を確認する</li>
+                                        <li>2号車 11・12番に乗車する</li>
+                                    </ol>
+                                </details>
                             </div>
                         </div>
                         <div class="schedule-item">
-                            <span class="time">11:30</span>
+                            <span class="time">11:35</span>
                             <div class="activity">
                                 <div class="title">フィレンツェSMN駅 到着</div>
                             </div>
                         </div>
                         <div class="schedule-item">
-                            <span class="time">12:00</span>
+                            <span class="time">11:50</span>
                             <div class="activity">
-                                <div class="title">ホテルチェックイン・ランチ</div>
-                                <div class="detail">トスカーナ料理を堪能</div>
+                                <div class="title">B&B Hotel Firenze Laurus Al Duomo へ徒歩移動 <span class="tag move">移動</span></div>
+                                <div class="detail">SMN駅から徒歩約7分。タクシー必須ではない</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">12:05</span>
+                            <div class="activity">
+                                <div class="title">B&B Hotel Firenze Laurus Al Duomo に荷物預け・ランチ</div>
+                                <div class="detail">Via de' Cerretani 54/R。トスカーナ料理を堪能</div>
                             </div>
                         </div>
                         <div class="schedule-item">
@@ -816,6 +970,7 @@
                 <div class="city-info">
                     <h2>ローマ</h2>
                     <p class="stay">4泊 ｜ 4/24（金）〜 4/28（火）</p>
+                    <p class="stay">The Inn at the Spanish Steps Luxury Collection</p>
                 </div>
             </div>
             <div class="days-container">
@@ -829,28 +984,44 @@
                     </div>
                     <div class="schedule-list">
                         <div class="schedule-item">
-                            <span class="time">8:30</span>
+                            <span class="time">8:15</span>
                             <div class="activity">
                                 <div class="title">ホテルチェックアウト</div>
                             </div>
                         </div>
                         <div class="schedule-item">
-                            <span class="time">9:30</span>
+                            <span class="time">09:03</span>
                             <div class="activity">
                                 <div class="title">フィレンツェ → ローマ移動 <span class="tag move">移動</span></div>
-                                <div class="detail">高速鉄道 Italo/Frecciarossa（約1時間30分）</div>
+                                <div class="detail">列車 8951｜Firenze SMN 09:03発 → Roma Termini 10:40着｜Business｜6号車 31・32番</div>
+                                <details class="detail-toggle">
+                                    <summary>B&B Hotel Firenze Laurus Al Duomo から駅までの手順を見る</summary>
+                                    <ol>
+                                        <li>B&B Hotel Firenze Laurus Al Duomo を出て Via de' Cerretani を SMN駅方面へ歩く</li>
+                                        <li>Piazza della Stazione 側から Firenze SMN に入る</li>
+                                        <li>電光掲示板で Roma Termini 行きの列車 8951 とホーム番号を確認する</li>
+                                        <li>6号車 31・32番に乗車する</li>
+                                    </ol>
+                                </details>
                             </div>
                         </div>
                         <div class="schedule-item">
-                            <span class="time">11:00</span>
+                            <span class="time">10:40</span>
                             <div class="activity">
                                 <div class="title">ローマ・テルミニ駅 到着</div>
                             </div>
                         </div>
                         <div class="schedule-item">
-                            <span class="time">11:30</span>
+                            <span class="time">11:00</span>
                             <div class="activity">
-                                <div class="title">ホテルチェックイン・ランチ</div>
+                                <div class="title">The Inn at the Spanish Steps Luxury Collection へ移動 <span class="tag move">移動</span></div>
+                                <div class="detail">Termini から地下鉄A線で Spagna へ。Via dei Condotti 85 まで徒歩数分</div>
+                            </div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="time">11:20</span>
+                            <div class="activity">
+                                <div class="title">The Inn at the Spanish Steps Luxury Collection に荷物預け・ランチ</div>
                                 <div class="detail">ローマ風パスタ（カルボナーラ、カチョエペペ）を堪能</div>
                             </div>
                         </div>
@@ -1099,41 +1270,42 @@
                     </div>
                     <div class="schedule-list">
                         <div class="schedule-item">
-                            <span class="time">6:00</span>
+                            <span class="time">2:00</span>
                             <div class="activity">
                                 <div class="title">起床・準備</div>
                             </div>
                         </div>
                         <div class="schedule-item">
-                            <span class="time">7:00</span>
+                            <span class="time">2:30</span>
                             <div class="activity">
                                 <div class="title">ホテルチェックアウト</div>
+                                <div class="detail">The Inn at the Spanish Steps Luxury Collection を出発</div>
                             </div>
                         </div>
                         <div class="schedule-item">
-                            <span class="time">7:30</span>
+                            <span class="time">3:00</span>
                             <div class="activity">
-                                <div class="title">テルミニ駅 → フィウミチーノ空港 <span class="tag move">移動</span></div>
-                                <div class="detail">レオナルド・エクスプレス（約32分）</div>
+                                <div class="title">ホテル → フィウミチーノ空港 <span class="tag move">移動</span></div>
+                                <div class="detail">スペイン広場周辺から早朝タクシーで移動。所要約40〜50分想定</div>
                             </div>
                         </div>
                         <div class="schedule-item">
-                            <span class="time">8:15</span>
+                            <span class="time">3:45</span>
                             <div class="activity">
                                 <div class="title">フィウミチーノ空港（FCO）到着</div>
-                                <div class="detail">チェックイン・出国手続き</div>
+                                <div class="detail">早朝便のため余裕を持ってチェックイン・出国手続き</div>
                             </div>
                         </div>
                         <div class="schedule-item">
-                            <span class="time">10:30</span>
+                            <span class="time">6:30</span>
                             <div class="activity">
                                 <div class="title">ローマ発（FCO） <span class="tag flight">フライト</span></div>
                             </div>
                         </div>
                         <div class="schedule-item">
-                            <span class="time">翌13:50</span>
+                            <span class="time">4/29 10:25</span>
                             <div class="activity">
-                                <div class="title">日本到着</div>
+                                <div class="title">成田空港到着</div>
                                 <div class="detail">お疲れ様でした！</div>
                             </div>
                         </div>
